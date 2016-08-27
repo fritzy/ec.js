@@ -2,7 +2,7 @@
 
 function setContains(a, b) {
   for (let i of b) {
-    if (!a.has(b)) return false;
+    if (!a.has(i)) return false;
   }
   return true;
 }
@@ -10,10 +10,11 @@ function setContains(a, b) {
 class System {
   constructor(components) {
     this.requirements = new Set(components);
+    this.entity = null;
   }
 
   apply(entity) {
-    if (setContains(entity.components, this.requirements)) {
+    if (setContains(entity.componentSet, this.requirements)) {
       entity.addSystem(this);
     }
   }

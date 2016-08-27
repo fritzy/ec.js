@@ -3,20 +3,24 @@ const PriorityChain = require('priority-chain');
 
 class Component extends PriorityChain {
   constructor(name, spec) {
+
     super();
     this.name = name;
     this.fields = new Set(Object.keys(spec));
     this.defaults = spec;
     this._data = {};
+
     for (let field of this.fields) {
       this._data[field] = spec[field];
+
       Object.defineProperty(this, field, {
         set: function (val) {
-          console.log('setting', field, val);
+
           val = this.emit('set:' + field, val);
           this._data[field] = val;
         },
         get: function () {
+
           let val = this._data[field];
           val = this.emit('get:' + field, val);
           return val;
@@ -24,7 +28,6 @@ class Component extends PriorityChain {
       });
     }
     this.entity = null;
-    this.priorityChain = new PriorityChain();
   }
 
   set(values) {
@@ -39,12 +42,8 @@ class Component extends PriorityChain {
     this.entity = entity;
   }
 
-  setData(data) {
-    for (field of Object.keys(data)) {
-      if (this.fields.has(field)) {
-        this[field] = data[field];
-      }
-    }
+  removeEntity() {
+    this.entity = null;
   }
 
 }

@@ -13,30 +13,37 @@ const spec = {
       absorb: 0,
       deflect: 0
     },
-    'Equipable': {
-      effects: [],
+    'equipable': {
       slot: 'unknown'
     },
-    'Equiping': {
-      slots: []
+    'slot': {
+      name: 'tenticle',
+      item: null
     }
   }
 };
 
 registry.loadSpec(spec);
 
-const Player = new Entity(registry);
+const player = new Entity(registry);
+const equipment = new System(['equipment']);
 
 const Chest = registry.components.get('Armor')({absorb: 50, deflect: 10});
 
+player.addComponent(registry.components.get('equipment')({slots: new Set(['chest', 'neck', 'head', 'legs', 'lefthand', 'righthand', 'ring', 'ring']})))
+
+player.subscribe('addSystem', 10, (system) => {
+  console.log('added system', system);
+  return system;
+});
+
+player.getNewSystems([Equipment]);
+
+/*
 class Test extends Array {
   push(item) {
     Array.prototype.push.call(this, item);
     console.log(item);
   }
 }
-
-const derp = new Test();
-
-derp.push('x');
-console.log(derp);
+*/
