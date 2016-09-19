@@ -16,28 +16,47 @@ const spec = {
     'equipable': {
       slot: 'unknown'
     },
-    'slot': {
-      name: 'tenticle',
+    'tenticle': {
+      type: 'slot',
       item: null
     }
   }
 };
 
+const entity = {
+  id: '',
+  components: [
+    {
+      name: 'left arm',
+      type: 'slot',
+      tags: ['grabbing', 'arm', 'hand'],
+      item: null
+    },
+    {
+      name: 'inventory',
+      type: 'inventory',
+      items: [],
+      size: 10
+    }
+  ],
+  children: []
+};
+
 registry.loadSpec(spec);
 
 const player = new Entity(registry);
-const equipment = new System(['equipment']);
+const equipment = new System(registry, ['slot']);
 
 const Chest = registry.components.get('Armor')({absorb: 50, deflect: 10});
 
-player.addComponent(registry.components.get('equipment')({slots: new Set(['chest', 'neck', 'head', 'legs', 'lefthand', 'righthand', 'ring', 'ring']})))
+player.addComponent(registry.components.get('tenticle')({}));
 
 player.subscribe('addSystem', 10, (system) => {
   console.log('added system', system);
   return system;
 });
 
-player.getNewSystems([Equipment]);
+player.getNewSystems([equipment]);
 
 /*
 class Test extends Array {

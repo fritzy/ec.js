@@ -8,12 +8,13 @@ function setContains(a, b) {
 }
 
 class System {
-  constructor(components) {
+  constructor(registry, components) {
     this.requirements = new Set(components);
     this.entity = null;
   }
 
   apply(entity) {
+    console.log(this.requirements, entity.componentSet)
     if (setContains(entity.componentSet, this.requirements)) {
       entity.addSystem(this);
     }

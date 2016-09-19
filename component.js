@@ -31,6 +31,7 @@ class Component extends PriorityChain {
   }
 
   set(values) {
+    console.log(values)
     for (let field of Object.keys(values)) {
       if (this.fields.has(field)) {
         this[field] = values[field];
