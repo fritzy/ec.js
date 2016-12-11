@@ -17,6 +17,7 @@ class System {
     console.log(this.requirements, entity.componentSet)
     if (setContains(entity.componentSet, this.requirements)) {
       entity.addSystem(this);
+      this.entity = entity;
     }
   }
 }

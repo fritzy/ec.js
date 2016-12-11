@@ -28,7 +28,7 @@ class Entity extends PriorityChain {
       comps = [comps];
     }
     comps.forEach((comp) => {
-      this.componentSet.add(comp.name);
+      this.componentSet.add(comp.type);
       if (!this.components.has(comp.name)) {
         this.components.set(comp.name, []);
       }
@@ -69,6 +69,7 @@ class Entity extends PriorityChain {
 
     for (let system of systems) {
       system.apply(this);
+      console.log("system:", system);
     }
   }
 
